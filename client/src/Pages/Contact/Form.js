@@ -5,7 +5,7 @@ function Form() {
     name: "",
     email: "",
     type: "",
-    message: ""
+    message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -13,7 +13,7 @@ function Form() {
     // Load the reCAPTCHA v3 script
     const loadRecaptcha = async () => {
       const script = document.createElement("script");
-      script.src = `https://www.google.com/recaptcha/api.js?render=${'6LfE9oYqAAAAAFW7ruq5F9dpBw4YxcOx3QZGM6Na'}`;
+      script.src = `https://www.google.com/recaptcha/api.js?render=${"6LfE9oYqAAAAAFW7ruq5F9dpBw4YxcOx3QZGM6Na"}`;
       script.async = true;
       script.defer = true;
       document.body.appendChild(script);
@@ -27,20 +27,23 @@ function Form() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const executeRecaptcha = async () => {
     try {
-      const token = await window.grecaptcha.execute(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY, {
-        action: 'submit'
-      });
+      const token = await window.grecaptcha.execute(
+        process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
+        {
+          action: "submit",
+        }
+      );
       return token;
     } catch (error) {
-      console.error('reCAPTCHA execution failed:', error);
+      console.error("reCAPTCHA execution failed:", error);
       throw error;
     }
   };
@@ -53,15 +56,15 @@ function Form() {
       const token = await executeRecaptcha();
 
       // Here you would typically send the token to your backend for verification
-      const response = await fetch('/api/verify-recaptcha', {
-        method: 'POST',
+      const response = await fetch("/api/verify-recaptcha", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           ...formData,
-          recaptchaToken: token
-        })
+          recaptchaToken: token,
+        }),
       });
 
       const data = await response.json();
@@ -69,27 +72,27 @@ function Form() {
       // Check the score returned from your backend
       if (data.success && data.score > 0.5) {
         // Handle successful submission
-        console.log('Form submitted successfully');
+        console.log("Form submitted successfully");
         // Reset form
         setFormData({
           name: "",
           email: "",
           type: "",
-          message: ""
+          message: "",
         });
       } else {
-        alert('Submission failed verification. Please try again.');
+        alert("Submission failed verification. Please try again.");
       }
     } catch (error) {
-      console.error('Submission error:', error);
-      alert('An error occurred. Please try again.');
+      console.error("Submission error:", error);
+      alert("An error occurred. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="max-w-[85rem] mt-44 md:mt-0 mx-auto">
+    <div className="max-w-[85rem] mx-auto">
       <section className="text-gray-600 body-font relative">
         <div className="container px-5 py-24 mx-auto flex sm:flex-nowrap flex-wrap">
           <div className="lg:w-2/3 md:w-1/2 bg-gray-300 overflow-hidden sm:mr-10 p-10 flex items-end justify-start relative">
@@ -107,14 +110,18 @@ function Form() {
                   ADDRESS
                 </h2>
                 <p className="mt-1">
-                  Photo booth tattooed prism, Portland Taiyaki hoodie Neutra typewriter
+                  Photo booth tattooed prism, Portland Taiyaki hoodie Neutra
+                  typewriter
                 </p>
               </div>
               <div className="lg:w-1/2 px-6 mt-4 lg:mt-0">
                 <h2 className="title-font font-semibold text-gray-900 tracking-widest text-xs">
                   EMAIL
                 </h2>
-                <a className="text-blue-500 leading-relaxed" href="mailto:example@email.com">
+                <a
+                  className="text-blue-500 leading-relaxed"
+                  href="mailto:example@email.com"
+                >
                   example@email.com
                 </a>
                 <h2 className="title-font font-semibold text-gray-900 tracking-widest text-xs mt-4">
@@ -146,7 +153,10 @@ function Form() {
               />
             </div>
             <div className="relative mb-4">
-              <label htmlFor="email" className="leading-7 text-sm text-gray-600">
+              <label
+                htmlFor="email"
+                className="leading-7 text-sm text-gray-600"
+              >
                 Email
               </label>
               <input
@@ -174,7 +184,10 @@ function Form() {
               />
             </div>
             <div className="relative mb-4">
-              <label htmlFor="message" className="leading-7 text-sm text-gray-600">
+              <label
+                htmlFor="message"
+                className="leading-7 text-sm text-gray-600"
+              >
                 Message
               </label>
               <textarea
@@ -193,7 +206,7 @@ function Form() {
             >
               <div className="absolute top-0 right-full w-full h-full bg-redPrimary transform group-hover:translate-x-full group-hover:scale-102 transition duration-500" />
               <span className="relative font-semibold">
-                {isSubmitting ? 'Sending...' : 'Send Message'}
+                {isSubmitting ? "Sending..." : "Send Message"}
               </span>
             </button>
           </form>

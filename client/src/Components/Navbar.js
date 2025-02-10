@@ -3,10 +3,8 @@ import { gsap } from "gsap";
 import logo from "../assets/images/logo.png";
 import logo1 from "../assets/images/logo1.png";
 import { Link, useLocation } from "react-router-dom";
-import { useAuth } from "../context/data";
 
 const Navbar = ({ openModal }) => {
-  const { authURL } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [aboutSidebarOpen, setAboutSidebarOpen] = useState(false);
@@ -131,7 +129,7 @@ const Navbar = ({ openModal }) => {
       <header>
         <nav className="z-50 fixed top-0 left-0 right-0 bg-transparent">
           <div
-            className={`w-full mx-auto px-10 md:px-24 py-4 ${
+            className={`w-full mx-auto px-4 md:px-24 py-4 ${
               isScrolled || megaMenuOpen
                 ? "bg-white text-gray-800"
                 : "bg-white opacity-70 text-gray-900"
@@ -142,42 +140,44 @@ const Navbar = ({ openModal }) => {
                 <div className="flex items-center">
                   <button
                     onClick={toggleMobileNav}
-                    className="flex md:hidden w-12 h-12 md:ml-0 -ml-5 items-center md:justify-center bg-transparent rounded-md transition duration-200"
+                    className="flex md:hidden w-12 h-12 items-center justify-center bg-transparent rounded-md transition duration-200"
+                    aria-label="Toggle mobile menu"
                   >
                     <svg
                       width="24"
                       height="24"
                       viewBox="0 0 24 24"
-                      fill="white"
+                      fill="none"
+                      className="text-gray-800"
                     >
                       <path
                         d="M3 12H21"
-                        stroke="white"
+                        stroke="currentColor"
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                       ></path>
                       <path
                         d="M3 6H21"
-                        stroke="white"
+                        stroke="currentColor"
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                       ></path>
                       <path
                         d="M3 18H21"
-                        stroke="white"
+                        stroke="currentColor"
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                       ></path>
                     </svg>
                   </button>
-                  <Link className="text-lg font-bold -ml-2 md:ml-1" to="/">
+                  <Link className="text-lg font-bold ml-2 md:ml-1" to="/">
                     <img
                       src={megaMenuOpen || isScrolled ? logo : logo}
                       alt="Logo"
-                      className="w-[12rem]"
+                      className="w-[8rem] md:w-[12rem]"
                     />
                   </Link>
                 </div>
@@ -252,9 +252,9 @@ const Navbar = ({ openModal }) => {
                     Product & Services
                   </h1>
                   <p className="mb-8">
-                    At Moja, we provide a comprehensive range of products and
-                    services to meet the needs of the textile and manufacturing
-                    industries.
+                    At Jezseem Traders, we provide a comprehensive range of
+                    products and services to meet the needs of the textile and
+                    manufacturing industries.
                   </p>
                 </div>
 
@@ -284,9 +284,7 @@ const Navbar = ({ openModal }) => {
         {/* Mobile Menu */}
         <div
           ref={sidebarRef}
-          className={`${
-            mobileNavOpen ? "block" : "hidden"
-          } fixed top-0 left-0 bottom-0 w-5/6 max-w-md z-50`}
+          className="fixed top-0 left-0 bottom-0 w-5/6 max-w-md z-50 transform -translate-x-full"
         >
           <div
             onClick={toggleMobileNav}
@@ -298,7 +296,7 @@ const Navbar = ({ openModal }) => {
                 to="/"
                 className="mr-auto text-2xl font-medium leading-none"
               >
-                <img src={logo} alt="err" className="w-[12rem]" />
+                <img src={logo1} alt="err" className="w-[12rem]" />
               </Link>
               <button onClick={toggleMobileNav}>
                 <svg
@@ -400,9 +398,12 @@ const Navbar = ({ openModal }) => {
 
             <div className="flex flex-col items-center justify-center space-y-4">
               <div className="h-full w-full border-l-4 border border-mainYellow bg-white p-6">
-                <h2 className="text-xl font-semibold text-gray-800 leading-none mb-3">
+                <Link
+                  to="/products"
+                  className="text-xl font-semibold text-gray-800 leading-none mb-3"
+                >
                   Products
-                </h2>
+                </Link>
                 <ul>
                   <li>
                     <Link className="text-sm underline font-semibold text-mainBlue leading-none">
@@ -423,9 +424,12 @@ const Navbar = ({ openModal }) => {
               </div>
 
               <div className="h-full w-full border-l-4 border border-mainYellow bg-white p-6">
-                <h2 className="text-xl font-semibold text-gray-800 leading-none mb-3">
+                <Link
+                  to="/consulting-services"
+                  className="text-xl font-semibold text-gray-800 leading-none mb-3"
+                >
                   Consulting Services
-                </h2>
+                </Link>
                 <ul>
                   <li>
                     <Link className="text-sm underline font-semibold text-mainBlue leading-none">
@@ -441,9 +445,12 @@ const Navbar = ({ openModal }) => {
               </div>
 
               <div className="h-full w-full border-l-4 border border-mainYellow bg-white p-6">
-                <h2 className="text-xl font-semibold text-gray-800 leading-none mb-3">
+                <Link
+                  to="/after-sales-services"
+                  className="text-xl font-semibold text-gray-800 leading-none mb-3"
+                >
                   After Sales Services
-                </h2>
+                </Link>
                 <ul>
                   <li>
                     <Link className="text-sm underline font-semibold text-mainBlue leading-none">

@@ -5,15 +5,15 @@ function Overview() {
     <div className="max-w-[85rem] mx-auto px-4 md:px-0">
       <div className="flex flex-col md:flex-row items-center justify-between w-full mt-44 md:mt-0 space-y-4 md:space-y-0 md:space-x-8">
         <h1 className="text-2xl font-bold text-center text-slate-800 md:text-4xl md:whitespace-nowrap ">
-          Why Choose Moja
+          Why Choose Jezseem Traders
         </h1>
       </div>
       <div className="flex flex-col md:flex-row items-stretch justify-between space-y-6 md:space-y-0 md:space-x-12 mt-8">
         <div className="w-full md:w-[35%] h-64">
           <img
             className="w-full h-full object-cover "
-            src="https://img.freepik.com/premium-photo/confused-adult-director-wearing-shirt-caucasian-director-studio-director-isolated-om-white_474717-102330.jpg?ga=GA1.1.1420080433.1739166999&semt=ais_incoming"
-            alt="Moja Company"
+            src="https://img.freepik.com/premium-photo/portrait-young-woman-gesturing-against-white-background_1048944-3043929.jpg?ga=GA1.1.529639526.1738752801&semt=ais_incoming"
+            alt="Jezseem Traders Company"
           />
         </div>
         <div className="w-full md:w-[65%] flex items-center">

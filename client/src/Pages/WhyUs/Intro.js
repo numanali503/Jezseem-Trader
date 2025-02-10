@@ -57,7 +57,7 @@ const Intro = () => {
                    shadow-lg z-10"
         style={{ clipPath: "inset(0 0 0 0)" }}
       >
-        <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2 md:mb-3 lg:mb-4 text-gray-600">
+        <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2 md:mb-3 lg:mb-4 text-gray-800">
           Why Choose Us?
         </h1>
         <p className="text-md mb-4 md:mb-5 lg:mb-6 text-justify text-gray-600">

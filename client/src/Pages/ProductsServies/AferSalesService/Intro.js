@@ -50,7 +50,7 @@ const Intro = () => {
         className="animated-card absolute md:top-44 top-[50%] md:translate-y-[0%] md:mx-auto mx-4 md:left-24 left-0 max-w-xl md:backdrop-blur-sm md:bg-opacity-50 bg-orangeSecondary p-4 md:p-6 lg:p-8 border-t-4 md:border-t-0 md:border-l-4 border-mainYellow shadow-lg"
         style={{ clipPath: "inset(0 0 0 0)" }}
       >
-        <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2 md:mb-3 lg:mb-4 text-gray-600">
+        <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2 md:mb-3 lg:mb-4 text-gray-800">
           After Sales Services
         </h1>
         <p className="text-md text-justify mb-4 md:mb-5 lg:mb-6 text-gray-600">

@@ -12,7 +12,7 @@ function Overview() {
                 Our History
               </h4>
               <h1 className="text-2xl lg:text-4xl font-bold tracking-tight text-gray-900 mb-6">
-                Moja's History
+                Jezseem Traders's History
               </h1>
             </div>
             <p className="text-md text-gray-600 leading-relaxed">

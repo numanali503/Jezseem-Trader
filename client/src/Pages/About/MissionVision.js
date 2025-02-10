@@ -23,7 +23,7 @@ const MissionVision = () => {
                   Our Vision
                 </h4>
                 <h2 className="text-2xl lg:text-4xl font-bold tracking-tight text-gray-900 mb-6">
-                  Moja's Vision
+                  Jezseem Traders's Vision
                 </h2>
               </div>
               <p className="text-md text-gray-600 leading-relaxed">
@@ -52,7 +52,7 @@ const MissionVision = () => {
                   Our Mission
                 </h4>
                 <h1 className="text-2xl lg:text-4xl font-bold tracking-tight text-gray-900 mb-6">
-                  Moja's Mission
+                  Jezseem Traders's Mission
                 </h1>
               </div>
               <p className="text-md text-gray-600 leading-relaxed">

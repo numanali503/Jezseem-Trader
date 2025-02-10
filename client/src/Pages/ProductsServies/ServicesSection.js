@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 const ServicesSection = () => {
   const [products, setProducts] = useState([]);
@@ -7,17 +7,17 @@ const ServicesSection = () => {
   useEffect(() => {
     const fetchProducts = () => {
       setIsLoading(true);
-      const storedProducts = localStorage.getItem('psLinks');
+      const storedProducts = localStorage.getItem("psLinks");
 
       if (storedProducts) {
         try {
           const data = JSON.parse(storedProducts);
           const filteredProducts = data.filter(
-            product => product.categoryName === 'products'
+            (product) => product.categoryName === "products"
           );
           setProducts(filteredProducts);
         } catch (error) {
-          console.error('Error parsing products:', error);
+          console.error("Error parsing products:", error);
         }
       }
       setIsLoading(false);
@@ -39,7 +39,7 @@ const ServicesSection = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Moja's Top Products
+            Jezseem Traders's Top Products
           </h2>
           <div className="w-24 h-1 bg-greenPrimary mx-auto rounded-full"></div>
         </div>
@@ -54,7 +54,7 @@ const ServicesSection = () => {
               <article
                 key={product.id}
                 className="group bg-white rounded-lg border border-greenPrimary overflow-hidden"
-                onClick={() => window.location.href = `/${product.linkURL}`}
+                onClick={() => (window.location.href = `/${product.linkURL}`)}
               >
                 <div className="aspect-w-16 aspect-h-9 bg-gray-200">
                   <img
@@ -62,7 +62,7 @@ const ServicesSection = () => {
                     alt={product.linkName}
                     className="w-full h-64 object-cover object-center group-hover:scale-105 transition-transform duration-300"
                     onError={(e) => {
-                      e.target.src = '/placeholder-image.jpg';
+                      e.target.src = "/placeholder-image.jpg";
                       e.target.onerror = null;
                     }}
                   />
