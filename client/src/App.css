@@ -1,0 +1,111 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
+@import url('https://fonts.cdnfonts.com/css/product-sans');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+body {
+  /* font-family: "Outfit", sans-serif; */
+  /* font-family: "DM Sans", sans-serif; */
+  font-family: "Montserrat", sans-serif;
+  /* font-family: "Space Grotesk", serif; */
+  /* font-family: "Poppins", serif; */
+}
+
+.iframeFont {
+  font-family: "Montserrat", sans-serif;
+}
+
+.activeBtn:active {
+  transform: translateY(5px);
+}
+
+.hero-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.content {
+  position: relative;
+  color: white;
+  z-index: 1;
+  text-align: center;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.circular-path {
+  stroke-dasharray: 0;
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 1s ease;
+}
+
+.cta-background {
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-background::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('./assets/images/bg.png');
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.6s ease-in-out;
+  transform: scale(1);
+}
+
+.cta-background:hover::before {
+  transform: scale(1.1);
+  /* Scale up the background for the zoom effect */
+}
+
+.tilted-rectangle {
+  position: relative;
+  padding-top: 14rem;
+  padding-bottom: 14rem;
+  clip-path: polygon(0 25%, 100% 0, 100% 80%, 0 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tilted2-rectangle {
+  position: relative;
+  padding-top: 14rem;
+  padding-bottom: 14rem;
+  clip-path: polygon(0 0%, 100% 25%, 100% 100%, 0 80%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.inner-tilted-div {
+  height: 100%;
+}
+
+/* Make it a straight rectangle on smaller screens */
+@media screen and (max-width: 768px) {
+  .tilted-rectangle {
+    height: auto;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    /* Rectangular shape - straight edges */
+  }
+}
