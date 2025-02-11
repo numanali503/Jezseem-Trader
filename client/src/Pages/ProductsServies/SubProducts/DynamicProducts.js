@@ -77,7 +77,11 @@ function DynamicProducts() {
       </div>
 
       <div className="max-w-[85rem] mx-auto w-full px-4 sm:px-8 md:px-16 lg:px-24 py-8 md:py-12">
-        <img src={data.image} alt="Product" className="w-full h-auto" />
+        <img
+          src={data.image}
+          alt="Product"
+          className="w-full h-[35rem] object-cover"
+        />
       </div>
 
       <div className="max-w-[85rem] mx-auto w-full px-4 sm:px-8 md:px-16 lg:px-24 py-4">

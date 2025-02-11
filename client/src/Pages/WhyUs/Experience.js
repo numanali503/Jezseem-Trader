@@ -1,7 +1,7 @@
 import React from "react";
 
 const ExperienceBlock = ({ title, description }) => (
-  <div className="w-full lg:w-[580px] group">
+  <div className="w-full lg:w-[550px] group">
     {/* Title with lines */}
     <div className="flex items-center justify-center w-full space-x-8">
       <h2 className="text-2xl md:text-4xl font-bold text-neutral-800 whitespace-nowrap transition-transform duration-500 group-hover:scale-105">
@@ -33,8 +33,8 @@ const Experience = () => {
   ];
 
   return (
-    <section className=" bg-white overflow-hidden">
-      <div className="max-w-[1400px] mx-auto px-8">
+    <section className=" bg-white max-w-[85rem] mx-auto overflow-hidden">
+      <div className=" mx-auto ">
         <div className="flex flex-col lg:flex-row items-start justify-between gap-16">
           {sections.map((section, index) => (
             <div key={index} className="w-full">
@@ -50,7 +50,7 @@ const Experience = () => {
                       : "from-purple-50 to-blue-50"
                   } 
                   opacity-20 absolute 
-                  ${index === 0 ? "-left-12" : "-right-12"} 
+                  ${index === 0 ? "left-12" : "right-12"} 
                   blur-2xl transform -translate-y-1/2`}
                 ></div>
               </div>

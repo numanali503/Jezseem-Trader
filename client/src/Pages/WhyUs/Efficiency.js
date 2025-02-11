@@ -2,9 +2,9 @@ import React from "react";
 
 const ContentSection = () => {
   return (
-    <section className="bg-white py-24">
+    <section className="bg-white max-w-[85rem] mx-auto overflow-hidden py-24">
       {/* Main Why Us Content */}
-      <div className="max-w-7xl mx-auto px-8">
+      <div className=" mx-auto ">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
           {/* Left Column */}
           <div className="space-y-8">

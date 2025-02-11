@@ -18,7 +18,7 @@ function PSLinks() {
   // Compute the URL based on the current form data
   const pageUrl =
     formData.category && formData.pageLinkName
-      ? `https://Jezseem Traders-solution.vercel.app/${formData.category
+      ? `https://www.jezseemtraders.com/${formData.category
           .toLowerCase()
           .replace(/\s+/g, "-")}/${formData.pageLinkName
           .toLowerCase()

@@ -2,7 +2,7 @@ import React from "react";
 
 function Overview() {
   return (
-    <div className="max-w-[85rem] mx-auto px-4 md:px-0">
+    <div className="max-w-[85rem] md:px-0 overflow-hidden mx-auto">
       <div className="flex flex-col md:flex-row items-center justify-between w-full mt-44 md:mt-0 space-y-4 md:space-y-0 md:space-x-8">
         <h1 className="text-2xl font-bold text-center text-slate-800 md:text-4xl md:whitespace-nowrap ">
           Why Choose Jezseem Traders

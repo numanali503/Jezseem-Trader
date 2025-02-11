@@ -4,58 +4,52 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import toast, { Toaster } from "react-hot-toast";
 
-const MegaMenuPreview = () => {
+const InsightsManager = () => {
   const { authURL } = useAuth();
-  const [products, setProducts] = useState([]);
+  const [insights, setInsights] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [editingProduct, setEditingProduct] = useState(null);
+  const [editingInsight, setEditingInsight] = useState(null);
   const [editFormData, setEditFormData] = useState({
-    categoryName: "",
-    linkName: "",
+    category: "",
+    title: "",
     image: null,
-    overview: "",
+    summary: "",
     description: "",
+    status: "",
   });
-  const generatePageUrl = (category, linkName) => {
-    if (category && linkName) {
-      return `https://www.jezseemtraders.com/${category
-        .toLowerCase()
-        .replace(/\s+/g, "-")}/${linkName.toLowerCase().replace(/\s+/g, "-")}`;
-    }
-    return "";
-  };
-  // Fetch products
+
+  // Fetch insights
   useEffect(() => {
-    fetchProducts();
+    fetchInsights();
   }, [authURL]);
 
-  const fetchProducts = async () => {
+  const fetchInsights = async () => {
     try {
-      const response = await fetch(`${authURL}/get-all-pslinks`);
+      const response = await fetch(`${authURL}/get-insight`);
       const data = await response.json();
-      setProducts(data);
+      setInsights(data);
       setLoading(false);
     } catch (error) {
-      console.error("Error fetching products:", error);
-      setError("Failed to load products");
+      console.error("Error fetching insights:", error);
+      setError("Failed to load insights");
       setLoading(false);
     }
   };
 
   // Handle delete
   const handleDelete = async (id) => {
-    if (window.confirm("Are you sure you want to delete this product?")) {
+    if (window.confirm("Are you sure you want to delete this insight?")) {
       try {
-        const response = await fetch(`${authURL}/delete-pslink/${id}`, {
+        const response = await fetch(`${authURL}/delete-insight/${id}`, {
           method: "DELETE",
         });
 
         if (response.ok) {
-          toast.success("Product deleted successfully!");
-          fetchProducts(); // Refresh the list
+          toast.success("Insight deleted successfully!");
+          fetchInsights();
         } else {
-          toast.error("Failed to delete product");
+          toast.error("Failed to delete insight");
         }
       } catch (error) {
         toast.error("Error occurred while deleting");
@@ -64,14 +58,15 @@ const MegaMenuPreview = () => {
   };
 
   // Handle edit mode
-  const handleEditClick = (product) => {
-    setEditingProduct(product._id);
+  const handleEditClick = (insight) => {
+    setEditingInsight(insight._id);
     setEditFormData({
-      categoryName: product.categoryName,
-      linkName: product.linkName,
-      image: product.image,
-      overview: product.overview,
-      description: product.description,
+      category: insight.category,
+      title: insight.title,
+      image: insight.image,
+      summary: insight.summary,
+      description: insight.description,
+      status: insight.status,
     });
   };
 
@@ -90,21 +85,23 @@ const MegaMenuPreview = () => {
     }
   };
 
+  // Helper function to format image source
+  const getImageSource = (imageData) => {
+    if (!imageData) return null;
+
+    // Check if the image is already a complete data URL
+    if (imageData.startsWith("data:image")) {
+      return imageData;
+    }
+
+    // If it's just a base64 string, convert it to a complete data URL
+    return `data:image/webp;base64,${imageData}`;
+  };
+
   // Handle update
   const handleUpdate = async (id) => {
     try {
-      // Generate linkURL
-      const linkURL = `${editFormData.categoryName
-        .toLowerCase()
-        .replace(/\s+/g, "-")}/${editFormData.linkName
-        .toLowerCase()
-        .replace(/\s+/g, "-")}`;
-
-      const updatedData = {
-        ...editFormData,
-        linkURL: linkURL,
-      };
-      const response = await fetch(`${authURL}/update-pslink/${id}`, {
+      const response = await fetch(`${authURL}/update-insight/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -113,15 +110,23 @@ const MegaMenuPreview = () => {
       });
 
       if (response.ok) {
-        toast.success("Product updated successfully!");
-        setEditingProduct(null);
-        fetchProducts(); // Refresh the list
+        toast.success("Insight updated successfully!");
+        setEditingInsight(null);
+        fetchInsights();
       } else {
-        toast.error("Failed to update product");
+        toast.error("Failed to update insight");
       }
     } catch (error) {
       toast.error("Error occurred while updating");
     }
+  };
+
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
   };
 
   if (loading) {
@@ -132,14 +137,6 @@ const MegaMenuPreview = () => {
     return <div className="text-center text-red-500 p-6">{error}</div>;
   }
 
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
-
   return (
     <div className="max-w-7xl mx-auto py-6">
       <Toaster position="top-center" reverseOrder={false} />
@@ -147,26 +144,26 @@ const MegaMenuPreview = () => {
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
-          Manage Products and Services
+          Manage Insights
         </h1>
         <p className="text-gray-600">
-          Edit or delete your products and services
+          Edit or delete your insights and articles
         </p>
       </div>
 
-      {/* Products List */}
+      {/* Insights List */}
       <div className="bg-white rounded-lg shadow">
         <div className="border-b border-gray-200 px-6 py-4">
-          <h2 className="text-xl font-semibold text-gray-800">All Products</h2>
+          <h2 className="text-xl font-semibold text-gray-800">All Insights</h2>
           <p className="text-sm text-gray-500 mt-1">
-            Showing {products.length} products
+            Showing {insights.length} insights
           </p>
         </div>
 
         <ul className="divide-y divide-gray-200">
-          {products.map((product) => (
-            <li key={product._id} className="p-6">
-              {editingProduct === product._id ? (
+          {insights.map((insight) => (
+            <li key={insight._id} className="p-6">
+              {editingInsight === insight._id ? (
                 // Edit Form
                 <div className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
@@ -175,40 +172,58 @@ const MegaMenuPreview = () => {
                         Category
                       </label>
                       <select
-                        value={editFormData.categoryName}
+                        value={editFormData.category}
                         onChange={(e) =>
                           setEditFormData({
                             ...editFormData,
-                            categoryName: e.target.value,
+                            category: e.target.value,
                           })
                         }
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                       >
-                        <option value="products">Products</option>
-                        <option value="consulting-services">
-                          Consulting Services
-                        </option>
-                        <option value="after-sales-services">
-                          After Sales Services
-                        </option>
+                        <option value="Products">Products</option>
+                        <option value="Services">Services</option>
+                        <option value="Technology">Technology</option>
+                        <option value="Industry">Industry</option>
                       </select>
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700">
-                        Link Name
+                        Status
                       </label>
-                      <input
-                        type="text"
-                        value={editFormData.linkName}
+                      <select
+                        value={editFormData.status}
                         onChange={(e) =>
                           setEditFormData({
                             ...editFormData,
-                            linkName: e.target.value,
+                            status: e.target.value,
                           })
                         }
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                      />
+                      >
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                        <option value="pending">Pending</option>
+                        <option value="archived">Archived</option>
+                      </select>
                     </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">
+                      Title
+                    </label>
+                    <input
+                      type="text"
+                      value={editFormData.title}
+                      onChange={(e) =>
+                        setEditFormData({
+                          ...editFormData,
+                          title: e.target.value,
+                        })
+                      }
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    />
                   </div>
 
                   <div>
@@ -221,18 +236,27 @@ const MegaMenuPreview = () => {
                       onChange={handleFileChange}
                       className="mt-1 block w-full"
                     />
+                    {editFormData.image && (
+                      <div className="mt-2">
+                        <img
+                          src={getImageSource(editFormData.image)}
+                          alt="Preview"
+                          className="h-24 w-24 object-cover rounded-lg"
+                        />
+                      </div>
+                    )}
                   </div>
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700">
-                      Overview
+                      Summary
                     </label>
                     <textarea
-                      value={editFormData.overview}
+                      value={editFormData.summary}
                       onChange={(e) =>
                         setEditFormData({
                           ...editFormData,
-                          overview: e.target.value,
+                          summary: e.target.value,
                         })
                       }
                       rows="3"
@@ -254,25 +278,14 @@ const MegaMenuPreview = () => {
                   </div>
 
                   <div className="flex space-x-4">
-                    {/* URL Preview */}
-                    <div className="mt-4 text-sm text-gray-500">
-                      <span className="font-medium">Page URL will be:</span>
-                      <div className="text-xs text-blue-600 mt-2 whitespace-nowrap">
-                        {generatePageUrl(
-                          editFormData.categoryName,
-                          editFormData.linkName
-                        )}
-                      </div>
-                    </div>
-
                     <button
-                      onClick={() => handleUpdate(product._id)}
+                      onClick={() => handleUpdate(insight._id)}
                       className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
                     >
                       Save Changes
                     </button>
                     <button
-                      onClick={() => setEditingProduct(null)}
+                      onClick={() => setEditingInsight(null)}
                       className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300"
                     >
                       Cancel
@@ -285,10 +298,10 @@ const MegaMenuPreview = () => {
                   <div className="flex items-start justify-between">
                     <div className="flex items-start space-x-4">
                       <div className="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
-                        {product.image ? (
+                        {insight.image ? (
                           <img
-                            src={product.image}
-                            alt={product.linkName}
+                            src={getImageSource(insight.image)}
+                            alt={insight.title}
                             className="w-full h-full object-cover"
                           />
                         ) : (
@@ -302,37 +315,39 @@ const MegaMenuPreview = () => {
 
                       <div>
                         <h3 className="text-xl font-medium text-gray-900">
-                          {product.linkName}
+                          {insight.title}
                         </h3>
                         <div className="mt-1 text-sm text-gray-500">
                           Category:{" "}
-                          <span className="capitalize">
-                            {product.categoryName}
-                          </span>
+                          <span className="capitalize">{insight.category}</span>
                         </div>
-                        <div className="mt-1 text-xs text-blue-600">
-                          {product.linkURL && (
-                            <a
-                              href={`https://www.jezseemtraders.com/${product.linkURL}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              https://www.jezseemtraders.com/{product.linkURL}
-                            </a>
-                          )}
+                        <div className="mt-1">
+                          <span
+                            className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                              insight.status === "active"
+                                ? "bg-green-100 text-green-800"
+                                : insight.status === "inactive"
+                                ? "bg-red-100 text-red-800"
+                                : insight.status === "pending"
+                                ? "bg-yellow-100 text-yellow-800"
+                                : "bg-blue-100 text-blue-800"
+                            }`}
+                          >
+                            {insight.status}
+                          </span>
                         </div>
                       </div>
                     </div>
 
                     <div className="flex space-x-2">
                       <button
-                        onClick={() => handleEditClick(product)}
+                        onClick={() => handleEditClick(insight)}
                         className="px-3 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
                       >
                         Edit
                       </button>
                       <button
-                        onClick={() => handleDelete(product._id)}
+                        onClick={() => handleDelete(insight._id)}
                         className="px-3 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
                       >
                         Delete
@@ -340,7 +355,14 @@ const MegaMenuPreview = () => {
                     </div>
                   </div>
 
-                  {product.description && (
+                  <div>
+                    <h4 className="text-sm font-semibold text-gray-900 mb-2">
+                      Summary
+                    </h4>
+                    <p className="text-sm text-gray-600">{insight.summary}</p>
+                  </div>
+
+                  {insight.description && (
                     <div>
                       <h4 className="text-sm font-semibold text-gray-900 mb-2">
                         Description
@@ -348,27 +370,16 @@ const MegaMenuPreview = () => {
                       <div
                         className="text-sm text-gray-600 ql-editor"
                         dangerouslySetInnerHTML={{
-                          __html: product.description,
+                          __html: insight.description,
                         }}
                       />
                     </div>
                   )}
 
-                  {product.overview && (
-                    <div>
-                      <h4 className="text-sm font-semibold text-gray-900 mb-2">
-                        Overview
-                      </h4>
-                      <p className="text-sm text-gray-600">
-                        {product.overview}
-                      </p>
-                    </div>
-                  )}
-
                   <div className="pt-4 border-t border-gray-100">
                     <div className="flex justify-between text-xs text-gray-400">
-                      <span>Created: {formatDate(product.createdAt)}</span>
-                      <span>Last updated: {formatDate(product.updatedAt)}</span>
+                      <span>Created: {formatDate(insight.createdAt)}</span>
+                      <span>Last updated: {formatDate(insight.updatedAt)}</span>
                     </div>
                   </div>
                 </div>
@@ -381,4 +392,4 @@ const MegaMenuPreview = () => {
   );
 };
 
-export default MegaMenuPreview;
+export default InsightsManager;

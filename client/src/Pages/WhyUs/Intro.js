@@ -43,7 +43,7 @@ const Intro = () => {
     );
   }, []);
   return (
-    <div className="relative bg-slate-50 w-full h-[550px] overflow-hidden">
+    <div className="relative bg-slate-50 w-full h-[550px] overflow-hidden ">
       {/* Split background for mobile */}
       <div className="md:hidden w-full h-[550px]">
         <div className="w-full h-1/2 bg-mainBlue" />

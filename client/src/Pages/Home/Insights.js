@@ -13,9 +13,7 @@ function Insights() {
     const fetchInsights = async () => {
       try {
         const response = await fetch(`${authURL}/get-insight`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch insights");
-        }
+        if (!response.ok) throw new Error("Failed to fetch insights");
         const data = await response.json();
         setInsights(data);
       } catch (err) {
@@ -49,16 +47,16 @@ function Insights() {
 
   if (loading) {
     return (
-      <div className="text-center mt-12">
-        <p>Loading insights...</p>
+      <div className="flex items-center justify-center min-h-[400px]">
+        <i className="fas fa-spinner-third fa-spin text-4xl text-blue-500"></i>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="text-center mt-12">
-        <p className="text-red-600">Error: {error}</p>
+      <div className="text-center min-h-[400px] flex items-center justify-center">
+        <p className="text-red-600 font-medium">Error: {error}</p>
       </div>
     );
   }
@@ -66,64 +64,67 @@ function Insights() {
   const visibleInsights = window.innerWidth >= 768 ? 2 : 1;
 
   return (
-    <div className="relative max-w-[80rem] mx-auto rounded-lg bg--300 px-4 sm:px-6 md:px-8 lg:px-12">
-      <h1 className="text-xl sm:text-2xl md:text-4xl font-medium text-center text-slate-800">
-        Our Latest Insights
-      </h1>
-      <p className="text-sm sm:text-md text-center text-slate-600 mt-2 sm:mt-4 mb-4 sm:mb-8">
-        Our specialized services are designed to enhance the productivity,
-        quality, and efficiency of your textile business.
-      </p>
-      <div className="relative flex flex-col items-center justify-center mt-4 sm:mt-8">
-        <div className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-4 sm:-translate-x-12 md:-translate-x-20 z-10">
-          <button
-            onClick={prevInsights}
-            className="bg-[#FC9918] rounded-full hover:bg-[#E92A31] transition duration-300 w-8 h-8 sm:w-12 sm:h-12 flex items-center justify-center"
-          >
-            <i className="fas fa-chevron-left text-white text-sm sm:text-lg"></i>
-          </button>
-        </div>
+    <div className="max-w-7xl mx-auto px-4 py-8 relative">
+      <div className="text-center mb-8">
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">
+          Our Latest Insights
+        </h1>
+        <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+          Our specialized services are designed to enhance the productivity,
+          quality, and efficiency of your textile business.
+        </p>
+      </div>
 
-        <div className="space-y-8 md:space-y-0 md:space-x-4 flex flex-col md:flex-row">
+      <div className="relative">
+        <button
+          onClick={prevInsights}
+          className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 bg-[#FC9918] hover:bg-[#E92A31] transition-colors rounded-full w-12 h-12 flex items-center justify-center"
+          aria-label="Previous insights"
+        >
+          <i className="fas fa-chevron-left text-white text-lg"></i>
+        </button>
+
+        <div className="grid md:grid-cols-2 gap-8 mx-12">
           {insights
             .slice(currentIndex, currentIndex + visibleInsights)
             .map((insight, index) => (
               <div
                 key={index}
-                className="h-full w-full flex flex-col space-y-2 sm:space-y-4 items-center justify-center"
+                className="flex flex-col bg-white rounded overflow-hidden h-full"
               >
-                <img
-                  src={`data:image/jpeg;base64,${insight.image}`}
-                  alt="err"
-                  className="h-48 sm:h-64 md:h-80 w-full object-cover"
-                />
-                <h1 className="text-sm sm:text-base font-semibold w-full text-blue-900">
-                  {insight.category}
-                </h1>
-                <h1 className="text-base sm:text-lg md:text-xl font-bold w-full">
-                  {insight.title}
-                </h1>
-                <h1 className="w-full text-sm sm:text-md text-gray-800">
-                  {insight.summary}
-                </h1>
+                <div className="relative h-64">
+                  <img
+                    src={`data:image/jpeg;base64,${insight.image}`}
+                    alt={insight.title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="flex flex-col flex-grow p-6">
+                  <p className="text-sm font-semibold text-blue-900 mb-2">
+                    {insight.category}
+                  </p>
+                  <h2 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2">
+                    {insight.title}
+                  </h2>
+                  <p className="text-gray-800 text-base">{insight.summary}</p>
+                </div>
               </div>
             ))}
         </div>
 
-        <div className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-4 sm:translate-x-12 md:translate-x-20 z-10">
-          <button
-            onClick={nextInsights}
-            className="bg-[#FC9918] rounded-full hover:bg-[#E92A31] transition duration-300 w-8 h-8 sm:w-12 sm:h-12 flex items-center justify-center"
-          >
-            <i className="fas fa-chevron-right text-white text-sm sm:text-lg"></i>
-          </button>
-        </div>
+        <button
+          onClick={nextInsights}
+          className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 bg-[#FC9918] hover:bg-[#E92A31] transition-colors rounded-full w-12 h-12 flex items-center justify-center"
+          aria-label="Next insights"
+        >
+          <i className="fas fa-chevron-right text-white text-lg"></i>
+        </button>
       </div>
 
-      <div className="mt-8 sm:mt-12 w-full flex items-center justify-center">
+      <div className="text-center mt-8">
         <Link
           to="/insights"
-          className="relative group inline-block py-1.5 sm:py-2 px-3 sm:px-4 text-xs sm:text-sm text-gray-700 hover:text-gray-200 bg-[#FC9918] rounded-sm overflow-hidden transition duration-300"
+          className="relative group inline-block py-2 px-4 text-sm text-gray-700 hover:text-gray-200 bg-[#FC9918] rounded-sm overflow-hidden transition duration-300"
         >
           <div className="absolute top-0 right-full w-full h-full bg-[#E92A31] transform group-hover:translate-x-full group-hover:scale-102 transition duration-500"></div>
           <span className="relative tracking-wider font-semibold">

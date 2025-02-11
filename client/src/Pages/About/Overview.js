@@ -4,7 +4,7 @@ function Overview() {
   return (
     <section className="relative  flex items-center">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-red-50 via-white to-white" />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative py-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-0 relative py-20">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div className="space-y-8">
             <div className="animate-fade-in">
